@@ -1,0 +1,40 @@
+Problem statement
+You are given an array 'a' of size 'n' and an integer 'k'.
+Find the length of the longest subarray of 'a' whose sum is equal to 'k'.
+Example :
+Input: ‘n’ = 7 ‘k’ = 3
+‘a’ = [1, 2, 3, 1, 1, 1, 1]
+...........................................................................................................................
+
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int longestSubarrayWithSumK(vector<int> a, long long k) {
+    unordered_map<long long, int> prefix_sums; 
+    long long current_sum = 0; 
+    int max_length = 0; 
+
+    for (int i = 0; i < a.size(); i++) {
+        current_sum += a[i]; 
+
+        
+        if (current_sum == k) {
+            max_length = i + 1;
+        }
+
+        
+        if (prefix_sums.find(current_sum - k) != prefix_sums.end()) {
+            max_length = max(max_length, i - prefix_sums[current_sum - k]);
+        }
+
+        
+        if (prefix_sums.find(current_sum) == prefix_sums.end()) {
+            prefix_sums[current_sum] = i;
+        }
+    }
+
+    return max_length;
+}
+
+..............................................................................................................................
