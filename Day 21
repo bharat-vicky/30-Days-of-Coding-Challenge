@@ -1,0 +1,29 @@
+Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+A subarray is a contiguous non-empty sequence of elements within an array.
+.............................................................................................................
+
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int count = 0;
+        int currentSum = 0;
+        unordered_map<int, int> hashMap; 
+        hashMap[0] = 1; 
+        
+        for (int num : nums) {
+            currentSum += num;
+            
+            if (hashMap.find(currentSum - k) != hashMap.end()) {
+                count += hashMap[currentSum - k];
+            }
+            
+            hashMap[currentSum]++;
+        }
+        
+        return count;
+    }
+};
