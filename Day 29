@@ -1,0 +1,35 @@
+Given an integer array nums, find a 
+subarray
+ that has the largest product, and return the product.
+The test cases are generated so that the answer will fit in a 32-bit integer.
+.....................................................................................
+
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        if (nums.empty()) return 0;
+
+        int maxProduct = nums[0];
+        int minProduct = nums[0];
+        int result = nums[0];
+
+        for (size_t i = 1; i < nums.size(); i++) {
+            int num = nums[i];
+
+            if (num < 0) {
+                swap(maxProduct, minProduct);
+            }
+
+            maxProduct = max(num, maxProduct * num);
+            minProduct = min(num, minProduct * num);
+
+            result = max(result, maxProduct);
+        }
+
+        return result;
+    }
+};
